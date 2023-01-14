@@ -29,38 +29,48 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: IndexedStack(
-          index: _selectedIndex,
-          children: _bodyList,
-        ),
-        bottomNavigationBar: Container(
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(
-                        'assets/${Provider.of<ThemeModel>(context).assets}/tail_bg.png'),
-                    fit: BoxFit.fill),
-                color: Colors.transparent),
-            child: BottomNavigationBar(
-              elevation: 0,
-              backgroundColor: Colors.transparent,
-              items: const <BottomNavigationBarItem>[
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.image),
-                  label: '视频',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.image),
-                  backgroundColor: Colors.transparent,
-                  label: '图片',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.library_music),
-                  label: '音乐',
-                ),
-              ],
-              currentIndex: _selectedIndex,
-              onTap: _onItemTapped,
-            )));
+      body: Stack(
+        children: [
+          IndexedStack(
+            index: _selectedIndex,
+            children: _bodyList,
+          ),
+          Align(
+              alignment: Alignment.bottomCenter,
+              child: Theme(
+                  data: Theme.of(context)
+                      .copyWith(canvasColor: Colors.transparent),
+                  child: Container(
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage(
+                                  'assets/${Provider.of<ThemeModel>(context).assets}/tail_bg.png'),
+                              fit: BoxFit.fill),
+                          color: Colors.transparent),
+                      child: BottomNavigationBar(
+                        elevation: 0,
+                        backgroundColor: Colors.transparent,
+                        type: BottomNavigationBarType.fixed,
+                        items: const <BottomNavigationBarItem>[
+                          BottomNavigationBarItem(
+                            icon: Icon(Icons.video_library_outlined),
+                            label: '视频',
+                          ),
+                          BottomNavigationBarItem(
+                            icon: Icon(Icons.image),
+                            label: '图片',
+                          ),
+                          BottomNavigationBarItem(
+                            icon: Icon(Icons.library_music),
+                            label: '音乐',
+                          ),
+                        ],
+                        currentIndex: _selectedIndex,
+                        onTap: _onItemTapped,
+                      ))))
+        ],
+      ),
+    );
   }
 
   void _onItemTapped(int index) {

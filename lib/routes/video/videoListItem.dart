@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eoe_fans/common/Time.dart';
 import 'package:eoe_fans/models/video.dart';
 import 'package:flutter/material.dart';
@@ -31,8 +32,9 @@ class VideoListItem extends StatelessWidget {
                         children: [
                           SizedBox(
                             width: double.infinity,
+                            height: double.maxFinite,
                             child: Image(
-                              image: NetworkImage(video.pic),
+                              image: CachedNetworkImageProvider(video.pic),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -54,8 +56,8 @@ class VideoListItem extends StatelessWidget {
                                         color: Colors.white,
                                       ),
                                       Container(
-                                        padding: const EdgeInsets.only(
-                                            left: 2.0),
+                                        padding:
+                                            const EdgeInsets.only(left: 2.0),
                                         child: Text(
                                           video.view < 10000
                                               ? video.view.toString()
@@ -76,8 +78,8 @@ class VideoListItem extends StatelessWidget {
                                         ),
                                       ),
                                       Container(
-                                        padding: const EdgeInsets.only(
-                                            left: 2.0),
+                                        padding:
+                                            const EdgeInsets.only(left: 2.0),
                                         child: Text(
                                           video.danmaku < 10000
                                               ? video.danmaku.toString() + '条'
@@ -95,7 +97,8 @@ class VideoListItem extends StatelessWidget {
                                         padding:
                                             const EdgeInsets.only(left: 2.0),
                                         child: Text(
-                                          SecondToDate(video.danmaku),
+                                          SecondToDate(
+                                              int.parse(video.duration)),
                                           textAlign: TextAlign.center,
                                           style: const TextStyle(
                                               fontSize: 10,
@@ -155,8 +158,7 @@ class VideoListItem extends StatelessWidget {
                                     ),
                                   ),
                                   Container(
-                                    padding: const EdgeInsets.only(
-                                        left: 2.0),
+                                    padding: const EdgeInsets.only(left: 2.0),
                                     child: Center(
                                       child: Text(
                                         video.name,
