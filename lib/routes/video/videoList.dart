@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:eoe_fans/common/Api.dart';
 import 'package:eoe_fans/models/member.dart';
 import 'package:eoe_fans/models/video.dart';
@@ -8,6 +9,7 @@ import 'package:eoe_fans/routes/video/videoMemberFilter.dart';
 import 'package:eoe_fans/common/Global.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter/material.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class VideoList extends StatefulWidget {
   const VideoList({Key? key, this.origin}) : super(key: key);
@@ -19,6 +21,8 @@ class VideoList extends StatefulWidget {
 }
 
 class _VideoListState extends State<VideoList> {
+  final RefreshController _refreshController =
+      RefreshController(initialRefresh: true);
   late final bool? origin;
 
   int _page = -1;
@@ -29,7 +33,7 @@ class _VideoListState extends State<VideoList> {
 
   @override
   void initState() {
-    print('object');
+    // print('object');
     _getVideos();
     super.initState();
   }
@@ -56,16 +60,17 @@ class _VideoListState extends State<VideoList> {
     });
   }
 
-  _reloadVideos() async {
+  _reloadVideos({int? page}) async {
     setState(() {
       videoList = [];
-      _page = -1;
-      _getVideos();
+      _page = page ?? -1;
     });
+    await _getVideos();
   }
 
   @override
   Widget build(BuildContext context) {
+
     var videos = videoList
         .map((video) => StaggeredGridTile.count(
               crossAxisCellCount: 2,

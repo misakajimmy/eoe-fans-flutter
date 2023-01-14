@@ -63,9 +63,8 @@ class _VideoPageState extends State<VideoPage> {
             ),
           ),
           body: Container(
-            padding: const EdgeInsets.only(
-                left: 4, right: 4, top: 4),
-            child:  const TabBarView(
+            padding: const EdgeInsets.only(left: 4, right: 4, top: 4),
+            child: const TabBarView(
               children: [
                 VideoList(origin: false),
                 VideoList(origin: true),
