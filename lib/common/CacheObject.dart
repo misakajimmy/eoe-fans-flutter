@@ -78,9 +78,9 @@ class NetCache extends Interceptor {
     ResponseInterceptorHandler handler,
   ) async {
     // 如果启用缓存，将返回结果保存到缓存
-    if (Global.profile.cache.enable) {
-      _saveCache(response);
-    }
+    // if (Global.profile.cache.enable) {
+    //   _saveCache(response);
+    // }
   }
 
   _saveCache(Response object) {

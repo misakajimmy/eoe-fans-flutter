@@ -16,13 +16,16 @@ class ProfileChangeNotifier extends ChangeNotifier {
 }
 
 class ThemeModel extends ProfileChangeNotifier {
-  // 获取当前主题，如果为设置主题，则默认使用粉色主题
-  ColorSwatch get theme => Global.themes
-      .firstWhere((e) => e.value == _profile.theme, orElse: () => pink);
+  // 获取当前主题，如果为设置主题，则默认使用zao主题
+  String get theme => Global.themes
+      .firstWhere((e) => e.id == Global.currentTheme, orElse: () => Global.themes.first).id;
+  // 获取当前asset，如果为设置主题，则默认使用zao主题
+  String get assets => Global.themes
+      .firstWhere((e) => e.id == Global.currentTheme, orElse: () => Global.themes.first).assetsPath;
 
-  set theme(ColorSwatch color) {
-    if (color != theme) {
-      _profile.theme = color[500]?.value;
+  set theme(String id) {
+    if (id != Global.currentTheme) {
+      Global.currentTheme = id;
       notifyListeners();
     }
   }

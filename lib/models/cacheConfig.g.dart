@@ -6,11 +6,10 @@ part of 'cacheConfig.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-CacheConfig _$CacheConfigFromJson(Map<String, dynamic> json) => CacheConfig(
-      enable: json['enable'] as bool?,
-      maxAge: json['maxAge'] as num?,
-      maxCount: json['maxCount'] as num?,
-    );
+CacheConfig _$CacheConfigFromJson(Map<String, dynamic> json) => CacheConfig()
+  ..enable = json['enable'] as bool
+  ..maxAge = json['maxAge'] as num
+  ..maxCount = json['maxCount'] as num;
 
 Map<String, dynamic> _$CacheConfigToJson(CacheConfig instance) =>
     <String, dynamic>{

@@ -10,7 +10,7 @@ class Member {
   String lastName;
   String firstName;
   String bilibiliName;
-  String bilibiliUID;
+  num bilibiliUID;
   List<String> nickNames;
 
   factory Member.fromJson(Map<String, dynamic> json) => _$MemberFromJson(json);

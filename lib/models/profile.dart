@@ -8,7 +8,6 @@ class Profile {
   Profile({
     this.token,
     this.theme,
-    this.cache,
     this.lastLogin,
     this.locale,
   });

@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:eoe_fans/models/eoeTheme.dart';
+import 'package:eoe_fans/models/memberMap.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -7,38 +9,84 @@ import '../models/cacheConfig.dart';
 import '../models/profile.dart';
 import 'CacheObject.dart';
 
-const Map<int, Color> myPink = {
-  50: Color.fromRGBO(251, 114, 153, .1),
-  100: Color.fromRGBO(251, 114, 153, .2),
-  200: Color.fromRGBO(251, 114, 153, .3),
-  300: Color.fromRGBO(251, 114, 153, .4),
-  400: Color.fromRGBO(251, 114, 153, .5),
-  500: Color.fromRGBO(251, 114, 153, .6),
-  600: Color.fromRGBO(251, 114, 153, .7),
-  700: Color.fromRGBO(251, 114, 153, .8),
-  800: Color.fromRGBO(251, 114, 153, .9),
-  900: Color.fromRGBO(251, 114, 153, 1),
-};
-
-const MaterialColor pink = MaterialColor(0xFFFB7299, myPink);
-
-const _themes = <MaterialColor>[
-  pink,
-  Colors.blue,
-  Colors.yellow,
-  Colors.orange,
-  Colors.purple,
+const _themes = <dynamic>[
+  {
+    'id': 'zao',
+    'name': 'zao',
+    'assetsPath': 'zao',
+  },
+  {
+    'id': 'wan',
+    'name': 'wan',
+    'assetsPath': 'zao',
+  },
+  {
+    'id': 'mo',
+    'name': 'mo',
+    'assetsPath': 'zao',
+  },
+  {
+    'id': 'un',
+    'name': 'un',
+    'assetsPath': 'zao',
+  },
+  {
+    'id': 'mi',
+    'name': 'mi',
+    'assetsPath': 'zao',
+  }
 ];
+
+const Map<String, dynamic> membersJson = {
+  'zao': {
+    'lastName': '白',
+    'firstName': '露早',
+    'bilibiliName': '露早GOGO',
+    'bilibiliUID': 1669777785,
+    'nickNames': ['早早'],
+  },
+  'wan': {
+    'lastName': '唐',
+    'firstName': '莞儿',
+    'bilibiliName': '莞儿睡不醒',
+    'bilibiliUID': 1875044092,
+    'nickNames': [''],
+  },
+  'mo': {
+    'lastName': '苏',
+    'firstName': '虞莫',
+    'bilibiliName': '虞莫MOMO',
+    'bilibiliUID': 1811071010,
+    'nickNames': ['莫莫'],
+  },
+  'un': {
+    'lastName': '姜',
+    'firstName': '柚恩',
+    'bilibiliName': '柚恩不加糖',
+    'bilibiliUID': 1795147802,
+    'nickNames': ['柚柚'],
+  },
+  'mi': {
+    'lastName': '安',
+    'firstName': '米诺',
+    'bilibiliName': '米诺高分少女',
+    'bilibiliUID': 1778026586,
+    'nickNames': ['大米'],
+  }
+};
 
 class Global {
   static late SharedPreferences _prefs;
   static Profile profile = Profile();
+  static MemberMap members = MemberMap.fromJson(membersJson);
 
   //网络缓存对象
   static NetCache netCache = NetCache();
 
+  static String currentTheme = 'zao';
+
   //可选主题列表
-  static List<MaterialColor> get themes => _themes;
+  static List<EoeTheme> get themes => _themes.map((e) => EoeTheme.fromJson(e)).toList();
 
   //是否为release版
   static bool get isRelease => bool.fromEnvironment("dart.vm.product");

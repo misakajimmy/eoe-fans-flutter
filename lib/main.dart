@@ -1,19 +1,22 @@
 import 'dart:io';
 
-import 'package:eoe_fans/states/ProfileChangeNotifier.dart';
+import 'package:eoe_fans/routes/mainPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:eoe_fans/states/ProfileChangeNotifier.dart';
 import 'package:provider/provider.dart';
+
+import 'common/Global.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  if (Platform.isAndroid) {
-    // 以下两行 设置android状态栏为透明的沉浸。写在组件渲染之后，是为了在渲染后进行set赋值，覆盖状态栏，写在渲染之前MaterialApp组件会覆盖掉这个值。
-    SystemUiOverlayStyle systemUiOverlayStyle =
-        SystemUiOverlayStyle(statusBarColor: Colors.transparent);
-    SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
-  }
-  runApp(MyApp());
+  // if (Platform.isAndroid) {
+  //   // 以下两行 设置android状态栏为透明的沉浸。写在组件渲染之后，是为了在渲染后进行set赋值，覆盖状态栏，写在渲染之前MaterialApp组件会覆盖掉这个值。
+  //   SystemUiOverlayStyle systemUiOverlayStyle =
+  //       SystemUiOverlayStyle(statusBarColor: Colors.transparent);
+  //   SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
+  // }
+  Global.init().then((e) => runApp(MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -25,13 +28,15 @@ class MyApp extends StatelessWidget {
         ],
         child: Consumer<ThemeModel>(
             builder: (BuildContext context, themeModel, Widget? child) {
-          const theme = ThemeData();
-          const app = MaterialApp(
-            theme: theme,
-            initialRoute: "/",
-            routes: {},
-          );
-          return app;
+            return MaterialApp(
+              initialRoute: '/',
+              theme: ThemeData(
+                primarySwatch: Colors.blue,
+              ),
+              routes: {
+                '/': (BuildContext context) => MainPage(),
+              },
+            );
         }));
   }
 }

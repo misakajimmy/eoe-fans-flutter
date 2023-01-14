@@ -10,7 +10,7 @@ Member _$MemberFromJson(Map<String, dynamic> json) => Member(
       json['lastName'] as String,
       json['firstName'] as String,
       json['bilibiliName'] as String,
-      json['bilibiliUID'] as String,
+      json['bilibiliUID'] as num,
       (json['nickNames'] as List<dynamic>).map((e) => e as String).toList(),
     );
 
