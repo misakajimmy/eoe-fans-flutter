@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.eoe_fans">
+    package="com.app.eoe_fans">
    <application
         android:label="eoe_fans"
         android:name="${applicationName}"
