@@ -74,12 +74,13 @@ class Global {
   static late SharedPreferences _prefs;
   static Profile profile = Profile();
 
-  static Map<MemberEnum, Member> get members => membersJson.map((key, value) => MapEntry(key, Member.fromJson(value)));
+  static Map<MemberEnum, Member> get members =>
+      membersJson.map((key, value) => MapEntry(key, Member.fromJson(value)));
+
+  static String theme = 'zao';
 
   //网络缓存对象
   static NetCache netCache = NetCache();
-
-  static String currentTheme = 'zao';
 
   //可选主题列表
   static List<EoeTheme> get themes =>
@@ -103,8 +104,17 @@ class Global {
       ..enable = true
       ..maxAge = 3600
       ..maxCount = 100;
+
+    var t = _prefs.getString("theme");
+    print('theme');
+    print(theme);
+    if (t != null && t != '') {
+      theme = t;
+    }
   }
 
   static saveProfile() =>
       _prefs.setString("profile", jsonEncode(profile.toJson()));
+
+  static saveTheme(String id) => _prefs.setString("theme", id);
 }

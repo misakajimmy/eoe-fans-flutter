@@ -18,164 +18,162 @@ class VideoListItem extends StatelessWidget {
         }
       },
       child: Card(
-          clipBehavior: Clip.antiAliasWithSaveLayer,
-          child: Container(
-            child: Flex(
-              direction: Axis.vertical,
-              children: [
-                Expanded(
-                    flex: 2,
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          SizedBox(
-                            width: double.infinity,
-                            height: double.maxFinite,
-                            child: Image(
-                              image: CachedNetworkImageProvider(video.pic),
-                              fit: BoxFit.cover,
-                            ),
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        child: Container(
+          child: Flex(
+            direction: Axis.vertical,
+            children: [
+              Expanded(
+                  flex: 5,
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        SizedBox(
+                          width: double.infinity,
+                          height: double.maxFinite,
+                          child: Image(
+                            image: CachedNetworkImageProvider(video.pic),
+                            fit: BoxFit.cover,
                           ),
-                          Positioned(
-                            bottom: 0,
-                            left: 0,
-                            right: 0,
-                            child: Container(
-                              padding: const EdgeInsets.all(4.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Row(
-                                    children: [
-                                      const Icon(
-                                        Icons.ondemand_video_sharp,
+                        ),
+                        Positioned(
+                          bottom: 0,
+                          left: 0,
+                          right: 0,
+                          child: Container(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.ondemand_video_sharp,
+                                      size: 10,
+                                      color: Colors.white,
+                                    ),
+                                    Container(
+                                      padding: const EdgeInsets.only(left: 2.0),
+                                      child: Text(
+                                        video.view < 10000
+                                            ? video.view.toString()
+                                            : '${(video.view / 10000).toStringAsFixed(2)}万',
+                                        textAlign: TextAlign.center,
+                                        style: const TextStyle(
+                                            fontSize: 10, color: Colors.white),
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: const EdgeInsets.only(left: 4.0),
+                                      child: const Icon(
+                                        Icons.list_alt,
                                         size: 10,
                                         color: Colors.white,
                                       ),
-                                      Container(
-                                        padding:
-                                            const EdgeInsets.only(left: 2.0),
-                                        child: Text(
-                                          video.view < 10000
-                                              ? video.view.toString()
-                                              : '${(video.view / 10000).toStringAsFixed(2)}万',
-                                          textAlign: TextAlign.center,
-                                          style: const TextStyle(
-                                              fontSize: 10,
-                                              color: Colors.white),
-                                        ),
-                                      ),
-                                      Container(
-                                        padding:
-                                            const EdgeInsets.only(left: 4.0),
-                                        child: const Icon(
-                                          Icons.list_alt,
-                                          size: 10,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                      Container(
-                                        padding:
-                                            const EdgeInsets.only(left: 2.0),
-                                        child: Text(
-                                          video.danmaku < 10000
-                                              ? video.danmaku.toString() + '条'
-                                              : '${(video.danmaku / 10000).toStringAsFixed(2)}万',
-                                          style: const TextStyle(
-                                              fontSize: 10,
-                                              color: Colors.white),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Container(
-                                        padding:
-                                            const EdgeInsets.only(left: 2.0),
-                                        child: Text(
-                                          SecondToDate(
-                                              int.parse(video.duration)),
-                                          textAlign: TextAlign.center,
-                                          style: const TextStyle(
-                                              fontSize: 10,
-                                              color: Colors.white),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    )),
-                Expanded(
-                    flex: 1,
-                    child: Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.only(
-                          left: 8, right: 8, top: 8, bottom: 8),
-                      child: Stack(
-                        children: [
-                          Container(
-                            width: double.infinity,
-                            child: Text(
-                              video.title,
-                              textAlign: TextAlign.left,
-                              style: const TextStyle(
-                                fontSize: 12,
-                              ),
-                              maxLines: 2,
-                            ),
-                          ),
-                          Positioned(
-                              bottom: 0,
-                              left: 0,
-                              right: 0,
-                              child: Row(
-                                children: [
-                                  Container(
-                                    padding: const EdgeInsets.only(
-                                        left: 1, right: 1, top: 1, bottom: 0),
-                                    decoration: BoxDecoration(
-                                      //设置四周圆角 角度 这里的角度应该为 父Container height 的一半
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(4.0)),
-                                      //设置四周边框
-                                      border: Border.all(
-                                          width: 1, color: Colors.grey),
                                     ),
-                                    child: Text(
-                                      'UP',
-                                      style: const TextStyle(
-                                          fontSize: 8, color: Colors.grey),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: const EdgeInsets.only(left: 2.0),
-                                    child: Center(
+                                    Container(
+                                      padding: const EdgeInsets.only(left: 2.0),
                                       child: Text(
-                                        video.name,
+                                        video.danmaku < 10000
+                                            ? video.danmaku.toString() + '条'
+                                            : '${(video.danmaku / 10000).toStringAsFixed(2)}万',
+                                        style: const TextStyle(
+                                            fontSize: 10, color: Colors.white),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.only(left: 2.0),
+                                      child: Text(
+                                        SecondToDate(int.parse(video.duration)),
                                         textAlign: TextAlign.center,
                                         style: const TextStyle(
-                                            fontSize: 10, color: Colors.grey),
+                                            fontSize: 10, color: Colors.white),
                                       ),
-                                    ),
-                                  ),
-                                ],
-                              ))
-                        ],
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  )),
+              Expanded(
+                flex: 3,
+                child: Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.only(
+                    left: 8,
+                    right: 8,
+                    top: 8,
+                    bottom: 8,
+                  ),
+                  child: Stack(
+                    children: [
+                      SizedBox(
+                        width: double.infinity,
+                        child: Text(
+                          video.title,
+                          textAlign: TextAlign.left,
+                          style: const TextStyle(
+                            fontSize: 12,
+                          ),
+                          maxLines: 2,
+                        ),
                       ),
-                    ))
-              ],
-            ),
-          )),
+                      Positioned(
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        child: Row(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.only(
+                                  left: 1, right: 1, top: 1, bottom: 0),
+                              decoration: BoxDecoration(
+                                //设置四周圆角 角度 这里的角度应该为 父Container height 的一半
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(4.0)),
+                                //设置四周边框
+                                border:
+                                    Border.all(width: 1, color: Colors.grey),
+                              ),
+                              child: Text(
+                                'UP',
+                                style: const TextStyle(
+                                    fontSize: 8, color: Colors.grey),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.only(left: 2.0),
+                              child: Center(
+                                child: Text(
+                                  video.name,
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                      fontSize: 10, color: Colors.grey),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

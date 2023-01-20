@@ -14,22 +14,25 @@ class VideoPage extends StatefulWidget {
 class _VideoPageState extends State<VideoPage> {
   @override
   Widget build(BuildContext context) {
-    var mem = 'un';
     return DefaultTabController(
         length: 2,
         child: Scaffold(
           appBar: AppBar(
             leading: GestureDetector(
-                onTap: () {},
-                child: Container(
-                    margin: const EdgeInsets.only(left: 16.0),
-                    child: const CircleAvatar(
-                      child: ClipOval(
-                        child: Image(
-                          image: AssetImage('assets/eoe.webp'),
-                        ),
-                      ),
-                    ))),
+              onTap: () {
+                Navigator.pushNamed(context, '/setting');
+              },
+              child: Container(
+                margin: const EdgeInsets.only(left: 16.0),
+                child: const CircleAvatar(
+                  child: ClipOval(
+                    child: Image(
+                      image: AssetImage('assets/eoe.webp'),
+                    ),
+                  ),
+                ),
+              ),
+            ),
             centerTitle: true,
             title: Container(
               width: 192,
@@ -66,8 +69,8 @@ class _VideoPageState extends State<VideoPage> {
             padding: const EdgeInsets.only(left: 4, right: 4, top: 4),
             child: const TabBarView(
               children: [
-                VideoList(origin: false),
                 VideoList(origin: true),
+                VideoList(origin: false),
               ],
             ),
           ),

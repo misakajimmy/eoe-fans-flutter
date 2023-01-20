@@ -1,6 +1,9 @@
 import 'dart:io';
 
 import 'package:eoe_fans/routes/mainPage.dart';
+import 'package:eoe_fans/routes/setting/settingPage.dart';
+import 'package:eoe_fans/routes/setting/settingTheme.dart';
+import 'package:eoe_fans/routes/splashPage.dart';
 import 'package:flutter/material.dart';
 import 'package:eoe_fans/states/ProfileChangeNotifier.dart';
 import 'package:flutter/services.dart';
@@ -28,15 +31,18 @@ class MyApp extends StatelessWidget {
         ],
         child: Consumer<ThemeModel>(
             builder: (BuildContext context, themeModel, Widget? child) {
-            return MaterialApp(
-              initialRoute: '/',
-              theme: ThemeData(
-                primarySwatch: Colors.blue,
-              ),
-              routes: {
-                '/': (BuildContext context) => MainPage(),
-              },
-            );
+          return MaterialApp(
+            initialRoute: '/splash',
+            theme: ThemeData(
+              primarySwatch: Colors.blue,
+            ),
+            routes: {
+              '/': (BuildContext context) => MainPage(),
+              '/splash': (BuildContext context) => SplashScreen(),
+              '/setting': (BuildContext context) => const SettingPage(),
+              '/theme': (BuildContext context) => const SettingTheme(),
+            },
+          );
         }));
   }
 }

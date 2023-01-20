@@ -44,7 +44,9 @@ dependencies:
     flutter_staggered_grid_view: ^0.6.2
     cached_network_image: ^3.2.3
     hexcolor: ^3.0.1
+    flutter_swiper_null_safety: ^1.0.2
     pull_to_refresh: ^2.0.0
+    settings_ui: ^2.0.2
 
 dev_dependencies:
     flutter_test:
@@ -58,6 +60,7 @@ dev_dependencies:
     flutter_lints: ^2.0.0
     json_model: ^1.0.0
     build_runner: ^2.3.3
+    flutter_launcher_icons: ^0.11.0
     json_serializable: ^6.5.4
 
 # For information on the generic Dart part of this file, see the
@@ -78,6 +81,8 @@ flutter:
         - assets/un/
         - assets/wan/
         - assets/zao/
+        - assets/head/
+        - assets/open/
     # To add assets to your application, add an assets section, like this:
     # assets:
     #   - images/a_dot_burr.jpeg
@@ -108,3 +113,8 @@ flutter:
     #
     # For details regarding fonts from package dependencies,
     # see https://flutter.dev/custom-fonts/#from-packages
+flutter_icons:
+    android: true
+    ios: true
+    image_path: "assets/logo.jpg"
+    min_sdk_android: 21 # android min sdk min:16, default 21
