@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:eoe_fans/models/eoeTheme.dart';
 import 'package:eoe_fans/models/member.dart';
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/cacheConfig.dart';
@@ -89,8 +90,12 @@ class Global {
   //是否为release版
   static bool get isRelease => bool.fromEnvironment("dart.vm.product");
 
+  static late PackageInfo packageInfo;
+
   //初始化全局信息，会在App启动时启动
   static Future init() async {
+    WidgetsFlutterBinding.ensureInitialized();
+
     _prefs = await SharedPreferences.getInstance();
     var _profile = _prefs.getString("profile");
     if (_profile != null) {
@@ -111,6 +116,7 @@ class Global {
     if (t != null && t != '') {
       theme = t;
     }
+    packageInfo = await PackageInfo.fromPlatform();
   }
 
   static saveProfile() =>

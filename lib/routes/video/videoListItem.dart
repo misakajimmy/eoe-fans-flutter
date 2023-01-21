@@ -44,6 +44,14 @@ class VideoListItem extends StatelessWidget {
                           right: 0,
                           child: Container(
                             padding: const EdgeInsets.all(4.0),
+                            decoration: new BoxDecoration(
+                              color: Color.fromRGBO(0, 0, 0, .3),
+                              gradient: LinearGradient(
+                                colors: [Colors.transparent, Colors.black],
+                                begin:  Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                              )
+                            ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
@@ -59,7 +67,7 @@ class VideoListItem extends StatelessWidget {
                                       child: Text(
                                         video.view < 10000
                                             ? video.view.toString()
-                                            : '${(video.view / 10000).toStringAsFixed(2)}万',
+                                            : '${(video.view / 10000).toStringAsFixed(1)}万',
                                         textAlign: TextAlign.center,
                                         style: const TextStyle(
                                             fontSize: 10, color: Colors.white),
@@ -93,7 +101,9 @@ class VideoListItem extends StatelessWidget {
                                         SecondToDate(int.parse(video.duration)),
                                         textAlign: TextAlign.center,
                                         style: const TextStyle(
-                                            fontSize: 10, color: Colors.white),
+                                          fontSize: 10,
+                                          color: Colors.white,
+                                        ),
                                       ),
                                     )
                                   ],

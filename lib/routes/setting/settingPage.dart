@@ -55,12 +55,35 @@ class _SettingPageState extends State<SettingPage> {
                   Navigator.pushNamed(context, '/theme');
                 },
               ),
+
               // SettingsTile.switchTile(
               //   onToggle: (value) {},
               //   initialValue: true,
               //   leading: Icon(Icons.format_paint),
               //   title: Text('Enable custom theme'),
               // ),
+            ],
+          ),
+          SettingsSection(
+            title: Text('关于'),
+            tiles: [
+              SettingsTile.navigation(
+                leading: Icon(Icons.update),
+                title: Text('检查版本'),
+                value: Text(
+                    '当前版本: ${Global.packageInfo.version}'),
+                // onPressed: (BuildContext context) {
+                //   Navigator.pushNamed(context, '/theme');
+                // },
+              ),
+              SettingsTile.navigation(
+                leading: Icon(Icons.info_outline),
+                title: Text('关于我们'),
+                trailing: Icon(Icons.keyboard_arrow_right),
+                onPressed: (BuildContext context) {
+                  Navigator.pushNamed(context, '/about');
+                },
+              ),
             ],
           ),
         ],

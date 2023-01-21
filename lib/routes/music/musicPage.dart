@@ -12,12 +12,14 @@ class _MusicPageState extends State<MusicPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: GestureDetector(
-          child: Text('leading'),
+      body: Container(
+        height: double.maxFinite,
+        padding: EdgeInsets.only(bottom: 50),
+        child: Image(
+          image: AssetImage('assets/jijiji.jpg'),
+          fit: BoxFit.cover,
         ),
       ),
-      body: Text('MusicPage'),
     );
   }
 }

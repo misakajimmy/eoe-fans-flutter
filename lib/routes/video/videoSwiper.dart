@@ -1,11 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 const images = [
-  'https://i0.hdslb.com/bfs/banner/8ad45f463da4c6411b94c960a713dd72bbf97657.jpg',
-  'https://i0.hdslb.com/bfs/banner/023d359000172a213d7a5537295e4236fca63004.png',
-  'https://i0.hdslb.com/bfs/banner/6c87d994adab02603270d84c93bdc99dab6e64be.jpg'
+  'assets/banner1.jpg',
+  'assets/banner2.png',
+  'assets/banner3.png',
+];
+
+const urls = [
+  'https://b23.tv/GI9EDCl',
+  'bilibili://video/BV1Pv4y1C7TE',
+  'https://b23.tv/kI0MBkx'
 ];
 
 class VideoSwiper extends StatelessWidget {
@@ -17,12 +24,18 @@ class VideoSwiper extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         return Container(
           child: Image(
-            image: CachedNetworkImageProvider(images[index]),
+            image: AssetImage(images[index]),
             fit: BoxFit.fill,
           ),
         );
       },
       itemCount: images.length,
+      onTap: (int index) async {
+        print(index);
+        if (!await launchUrl(Uri.parse(urls[index]))) {
+          throw 'Could not launch ${urls[index]}';
+        }
+      },
       pagination: const SwiperPagination(
         alignment: Alignment.bottomRight,
         builder: DotSwiperPaginationBuilder(

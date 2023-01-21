@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:eoe_fans/routes/mainPage.dart';
+import 'package:eoe_fans/routes/setting/aboutUs.dart';
 import 'package:eoe_fans/routes/setting/settingPage.dart';
 import 'package:eoe_fans/routes/setting/settingTheme.dart';
 import 'package:eoe_fans/routes/splashPage.dart';
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
               '/splash': (BuildContext context) => SplashScreen(),
               '/setting': (BuildContext context) => const SettingPage(),
               '/theme': (BuildContext context) => const SettingTheme(),
+              '/about': (BuildContext context) => const AboutUs(),
             },
           );
         }));

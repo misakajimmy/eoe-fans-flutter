@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +14,14 @@ class _PicturePageState extends State<PicturePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Text('PicturePage'),
+      body: Container(
+        height: double.maxFinite,
+        padding: EdgeInsets.only(bottom: 50),
+        child: Image(
+          image: AssetImage('assets/jijiji.jpg'),
+          fit: BoxFit.cover,
+        ),
+      ),
     );
   }
 }

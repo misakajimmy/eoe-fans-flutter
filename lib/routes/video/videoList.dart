@@ -174,7 +174,7 @@ class _VideoListState extends State<VideoList> {
           // double progress = notification.metrics.pixels /
           //     notification.metrics.maxScrollExtent;
           // print("${(progress * 100).toInt()}%");
-          print(notification.metrics.maxScrollExtent - notification.metrics.pixels);
+          // print(notification.metrics.maxScrollExtent - notification.metrics.pixels);
           //重新构建
           setState(() {
             if (notification.metrics.maxScrollExtent - notification.metrics.pixels < 1000 && !_loading) {
