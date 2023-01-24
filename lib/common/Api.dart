@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:eoe_fans/models/version.dart';
 import 'package:eoe_fans/models/videos.dart';
 import 'package:eoe_fans/models/iResponse.dart';
 import 'package:eoe_fans/models/videosRequest.dart';
@@ -17,7 +18,7 @@ class Api {
 
   //  Options _options;
   static Dio dio =
-      Dio(BaseOptions(baseUrl: 'https://api.eoe.best/eoefans-api/v1', headers: {
+  Dio(BaseOptions(baseUrl: 'https://api.eoe.best/eoefans-api/v1', headers: {
     'ocp-apim-subscription-key': key,
     'Content-Type': 'application/json',
   }));
@@ -41,7 +42,7 @@ class Api {
       ..result = [];
     if (r.statusCode == 200) {
       var videoRes =
-          IResponse<Videos>.fromJson(r.data, (json) => Videos.fromJson(json));
+      IResponse<Videos>.fromJson(r.data, (json) => Videos.fromJson(json));
       print(videoRes.data?.page);
       print(videoRes.data?.numResults);
       if (videoRes.data != null) {
@@ -49,5 +50,25 @@ class Api {
       }
     }
     return tmpVideos;
+  }
+
+  Future<Version> version() async {
+    var paramsData = ({ 'subscription-key': key});
+    paramsData.removeWhere((key, value) => value == null);
+    var r = await dio.get('/tools/version',
+        queryParameters: paramsData);
+    var tmpVersion = Version()
+      ..version = ''
+      ..version_message = ''
+      ..download_url = {}
+      ..updated_at = '';
+    if (r.statusCode == 200) {
+      var versionRes =
+      IResponse<Version>.fromJson(r.data, (json) => Version.fromJson(json));
+      if (versionRes.data != null) {
+        tmpVersion = versionRes.data!;
+      }
+    }
+    return tmpVersion;
   }
 }

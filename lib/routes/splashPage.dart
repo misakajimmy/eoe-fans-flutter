@@ -21,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
   startTime() {
     _timer = Timer(Duration(milliseconds: 2000), () {
       _timer.cancel();
-      Navigator.of(context).pushReplacementNamed('/');
+      Navigator.of(context).pushReplacementNamed('/main');
     });
   }
 

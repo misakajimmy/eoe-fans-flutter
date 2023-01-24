@@ -1,0 +1,9 @@
+{
+    "version": "v1.0.0",
+    "version_message": "新增xxx功能",
+    "download_url": {
+        "android": "https://www.pgyer.com/xxxxxx",
+        "ios": "https://itunes.apple.com/cn/app/idxxxxxx"
+    },
+    "updated_at": "2023-01-01 00:00:00"
+}

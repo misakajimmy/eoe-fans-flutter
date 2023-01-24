@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 class AboutUs extends StatefulWidget {
   const AboutUs({Key? key}) : super(key: key);
@@ -24,16 +25,17 @@ class _AboutUsState extends State<AboutUs> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(270),
+        preferredSize: Size.fromHeight(180),
         child: AppBar(
           centerTitle: true,
           flexibleSpace: Container(
             height: double.maxFinite,
+            color: HexColor('#ffe3ef'),
             child: Image(
               alignment: Alignment.topCenter,
               image: AssetImage(
-                  'assets/logo.jpg'),
-              fit: BoxFit.cover,
+                  'assets/efans2.png'),
+              fit: BoxFit.contain,
             ),
           ),
         ),

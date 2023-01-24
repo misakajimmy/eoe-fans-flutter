@@ -317,6 +317,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "3.0.1"
+  hgg_app_upgrade:
+    dependency: "direct main"
+    description:
+      name: hgg_app_upgrade
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.0.0"
   http:
     dependency: transitive
     description:

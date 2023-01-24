@@ -1,7 +1,11 @@
+import 'package:eoe_fans/common/Api.dart';
+import 'package:eoe_fans/common/CompareVersion.dart';
+import 'package:eoe_fans/common/Global.dart';
 import 'package:eoe_fans/routes/music/musicPage.dart';
 import 'package:eoe_fans/routes/picture/picturePage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hgg_app_upgrade/hgg_app_upgrade.dart';
 import 'package:provider/provider.dart';
 
 import '../states/ProfileChangeNotifier.dart';
@@ -21,8 +25,25 @@ class _MainPageState extends State<MainPage> {
     const MusicPage(),
   ];
 
+  Future<AppUpgradeInfo?> _checkAppInfo() async {
+    var r = await Api().version();
+
+    if (r.version != '') {
+      if (haveNewVersion(r.version, Global.packageInfo.version)) {
+        return AppUpgradeInfo(
+          title: '新版本 V' + r.version,
+          contents: r.version_message.split('\n'),
+          apkDownloadUrl: r.download_url['android'],
+          force: false,
+        );
+      }
+    }
+    return null;
+  }
+
   @override
   void initState() {
+    AppUpgrade.appUpgrade(context, _checkAppInfo());
     super.initState();
   }
 
