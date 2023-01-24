@@ -2,7 +2,7 @@
         package="com.app.eoe_fans">
 
     <application
-            android:label="eoe_fans"
+            android:label="EOEFans"
             android:name="${applicationName}"
             android:requestLegacyExternalStorage="true"
             android:icon="@mipmap/ic_launcher">
