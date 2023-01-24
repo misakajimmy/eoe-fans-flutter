@@ -18,7 +18,7 @@ class Api {
 
   //  Options _options;
   static Dio dio =
-  Dio(BaseOptions(baseUrl: 'https://api.eoe.best/eoefans-api/v1', headers: {
+      Dio(BaseOptions(baseUrl: 'https://api.eoe.best/eoefans-api/v1', headers: {
     'ocp-apim-subscription-key': key,
     'Content-Type': 'application/json',
   }));
@@ -31,32 +31,35 @@ class Api {
   }
 
   Future<Videos> videos(VideosRequest params) async {
-    var paramsData = ({...params.toJson(), 'subscription-key': key});
-    paramsData.removeWhere((key, value) => value == null);
-    print(paramsData);
-    var r = await dio.get('/video-interface/advanced-search',
-        queryParameters: paramsData);
     var tmpVideos = Videos()
       ..page = 0
       ..numResults = 0
       ..result = [];
-    if (r.statusCode == 200) {
-      var videoRes =
-      IResponse<Videos>.fromJson(r.data, (json) => Videos.fromJson(json));
-      print(videoRes.data?.page);
-      print(videoRes.data?.numResults);
-      if (videoRes.data != null) {
-        tmpVideos = videoRes.data!;
+
+    try {
+      var paramsData = ({...params.toJson(), 'subscription-key': key});
+      paramsData.removeWhere((key, value) => value == null);
+      var r = await dio.get('/video-interface/advanced-search',
+          queryParameters: paramsData);
+
+      if (r.statusCode == 200) {
+        var videoRes =
+            IResponse<Videos>.fromJson(r.data, (json) => Videos.fromJson(json));
+        if (videoRes.data != null) {
+          tmpVideos = videoRes.data!;
+        }
       }
+    } catch (e) {
+      print(e);
     }
+
     return tmpVideos;
   }
 
   Future<Version> version() async {
-    var paramsData = ({ 'subscription-key': key});
+    var paramsData = ({'subscription-key': key});
     paramsData.removeWhere((key, value) => value == null);
-    var r = await dio.get('/tools/version',
-        queryParameters: paramsData);
+    var r = await dio.get('/tools/version', queryParameters: paramsData);
     var tmpVersion = Version()
       ..version = ''
       ..version_message = ''
@@ -64,7 +67,7 @@ class Api {
       ..updated_at = '';
     if (r.statusCode == 200) {
       var versionRes =
-      IResponse<Version>.fromJson(r.data, (json) => Version.fromJson(json));
+          IResponse<Version>.fromJson(r.data, (json) => Version.fromJson(json));
       if (versionRes.data != null) {
         tmpVersion = versionRes.data!;
       }

@@ -8,8 +8,11 @@ import 'package:eoe_fans/routes/video/videoListItem.dart';
 import 'package:eoe_fans/routes/video/videoMemberFilter.dart';
 import 'package:eoe_fans/common/Global.dart';
 import 'package:eoe_fans/routes/video/videoSwiper.dart';
+import 'package:eoe_fans/states/ProfileChangeNotifier.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
+import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class VideoList extends StatefulWidget {
@@ -26,7 +29,7 @@ class _VideoListState extends State<VideoList> {
       RefreshController(initialRefresh: true);
   late final bool? origin;
 
-  int _page = -1;
+  int _page = 0;
   MemberEnum? _memberFilter;
   VideosRequestOrder _order = VideosRequestOrder.view;
 
@@ -56,16 +59,22 @@ class _VideoListState extends State<VideoList> {
           : origin!
               ? VideosCopyright.Original
               : VideosCopyright.Reproduced);
-    setState(() {
-      videoList = [...videoList, ...videos.result];
-      _loading = false;
-    });
+    if (videos.result.length != 0) {
+      setState(() {
+        videoList = [...videoList, ...videos.result];
+        _loading = false;
+      });
+    } else {
+      await Future.delayed(Duration(seconds: 5), () {
+        _getVideos();
+      });
+    }
   }
 
   _reloadVideos({int? page}) async {
     setState(() {
       videoList = [];
-      _page = page ?? -1;
+      _page = page ?? 0;
     });
     await _getVideos();
   }
@@ -168,32 +177,69 @@ class _VideoListState extends State<VideoList> {
         ),
       ),
     );
-    return Scrollbar(
-      child: NotificationListener<ScrollNotification>(
-        onNotification: (ScrollNotification notification) {
-          // double progress = notification.metrics.pixels /
-          //     notification.metrics.maxScrollExtent;
-          // print("${(progress * 100).toInt()}%");
-          // print(notification.metrics.maxScrollExtent - notification.metrics.pixels);
-          //重新构建
-          setState(() {
-            if (notification.metrics.maxScrollExtent - notification.metrics.pixels < 1000 && !_loading) {
-              _getVideos();
-            }
-          });
-          // print("BottomEdge: ${notification.metrics.extentAfter == 0}");
-          return false;
-          //return true; //放开此行注释后，进度条将失效
-        },
-        child: SingleChildScrollView(
-          child: StaggeredGrid.count(
-            crossAxisCount: 4,
-            mainAxisSpacing: 0,
-            crossAxisSpacing: 0,
-            children: videos,
+    return Stack(
+      alignment: Alignment.topCenter,
+      children: [
+        Scrollbar(
+          child: NotificationListener<ScrollNotification>(
+            onNotification: (ScrollNotification notification) {
+              // double progress = notification.metrics.pixels /
+              //     notification.metrics.maxScrollExtent;
+              // print("${(progress * 100).toInt()}%");
+              // print(notification.metrics.maxScrollExtent - notification.metrics.pixels);
+              //重新构建
+              setState(() {
+                if (notification.metrics.maxScrollExtent -
+                            notification.metrics.pixels <
+                        1200 &&
+                    !_loading) {
+                  _getVideos();
+                }
+              });
+              // print("BottomEdge: ${notification.metrics.extentAfter == 0}");
+              return false;
+              //return true; //放开此行注释后，进度条将失效
+            },
+            child: SingleChildScrollView(
+              child: StaggeredGrid.count(
+                crossAxisCount: 4,
+                mainAxisSpacing: 0,
+                crossAxisSpacing: 0,
+                children: videos,
+              ),
+            ),
           ),
         ),
-      ),
+        _loading
+            ? Positioned(
+                top: 16,
+                child: Container(
+                  width: 64,
+                  height: 64,
+                  padding: EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    //设置四周圆角 角度 这里的角度应该为 父Container height 的一半
+                    borderRadius: const BorderRadius.all(Radius.circular(32.0)),
+                    gradient: RadialGradient(
+                      colors: [
+                        HexColor(Global
+                                .members[Provider.of<ThemeModel>(context)
+                                    .themeMember]
+                                ?.color ??
+                            '#FFFFFF'),
+                        Color.fromRGBO(255, 255, 255, 0),
+                      ],
+                      radius: 0.6,
+                    ),
+                  ),
+                  child: Image(
+                    image: AssetImage(
+                        'assets/${Provider.of<ThemeModel>(context).assets}/loading.gif'),
+                    fit: BoxFit.cover,
+                  ),
+                ))
+            : Container()
+      ],
     );
   }
 }
