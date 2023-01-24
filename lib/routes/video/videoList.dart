@@ -192,7 +192,11 @@ class _VideoListState extends State<VideoList> {
                 if (notification.metrics.maxScrollExtent -
                             notification.metrics.pixels <
                         1200 &&
+                    notification.metrics.maxScrollExtent -
+                        notification.metrics.pixels >
+                        0 &&
                     !_loading) {
+                  print(notification.metrics.maxScrollExtent - notification.metrics.pixels);
                   _getVideos();
                 }
               });
