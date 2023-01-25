@@ -4,19 +4,17 @@ import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 const images = [
-  'assets/banner1.jpg',
-  'assets/banner2.png',
-  'assets/banner3.png',
+  'http://i1.hdslb.com/bfs/archive/ca89454a004899718dcdc291459ed449a684e19c.jpg',
+  'http://i1.hdslb.com/bfs/archive/6d5257dac103caf8cbd286a556a21aaf21246fea.jpg',
 ];
 
 const urls = [
-  'https://b23.tv/GI9EDCl',
-  'bilibili://video/BV1Pv4y1C7TE',
-  'https://b23.tv/kI0MBkx'
+  'bilibili://video/BV168411w7Q4',
+  'bilibili://video/BV1tx4y1M7Gz',
 ];
 
-class VideoSwiper extends StatelessWidget {
-  const VideoSwiper({Key? key}) : super(key: key);
+class VideoSwiperNewYear extends StatelessWidget {
+  const VideoSwiperNewYear({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +22,7 @@ class VideoSwiper extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         return Container(
           child: Image(
-            image: AssetImage(images[index]),
+            image: CachedNetworkImageProvider(images[index]),
             fit: BoxFit.fill,
           ),
         );

@@ -111,8 +111,6 @@ class Global {
       ..maxCount = 100;
 
     var t = _prefs.getString("theme");
-    print('theme');
-    print(theme);
     if (t != null && t != '') {
       theme = t;
     }

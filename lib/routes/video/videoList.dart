@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:eoe_fans/common/Api.dart';
 import 'package:eoe_fans/models/member.dart';
 import 'package:eoe_fans/models/video.dart';
@@ -31,14 +30,13 @@ class _VideoListState extends State<VideoList> {
 
   int _page = 0;
   MemberEnum? _memberFilter;
-  VideosRequestOrder _order = VideosRequestOrder.view;
+  VideosRequestOrder _order = VideosRequestOrder.pubdate;
 
   bool _loading = false;
   List<Video> videoList = [];
 
   @override
   void initState() {
-    // print('object');
     _getVideos();
     super.initState();
   }
@@ -108,17 +106,17 @@ class _VideoListState extends State<VideoList> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      if (_order != VideosRequestOrder.view) {
+                      if (_order != VideosRequestOrder.pubdate) {
                         setState(() {
-                          _order = VideosRequestOrder.view;
+                          _order = VideosRequestOrder.pubdate;
                           _reloadVideos();
                         });
                       }
                     },
                     child: Text(
-                      '最多播放',
+                      '最新发布',
                       style: TextStyle(
-                        color: _order != VideosRequestOrder.view
+                        color: _order != VideosRequestOrder.pubdate
                             ? Colors.black54
                             : Colors.black,
                       ),
@@ -128,17 +126,17 @@ class _VideoListState extends State<VideoList> {
                     margin: const EdgeInsets.only(left: 8),
                     child: GestureDetector(
                       onTap: () {
-                        if (_order != VideosRequestOrder.pubdate) {
+                        if (_order != VideosRequestOrder.view) {
                           setState(() {
-                            _order = VideosRequestOrder.pubdate;
+                            _order = VideosRequestOrder.view;
                             _reloadVideos();
                           });
                         }
                       },
                       child: Text(
-                        '最新播放',
+                        '最多播放',
                         style: TextStyle(
-                          color: _order != VideosRequestOrder.pubdate
+                          color: _order != VideosRequestOrder.view
                               ? Colors.black54
                               : Colors.black,
                         ),
@@ -193,10 +191,11 @@ class _VideoListState extends State<VideoList> {
                             notification.metrics.pixels <
                         1200 &&
                     notification.metrics.maxScrollExtent -
-                        notification.metrics.pixels >
+                            notification.metrics.pixels >
                         0 &&
                     !_loading) {
-                  print(notification.metrics.maxScrollExtent - notification.metrics.pixels);
+                  // print(notification.metrics.maxScrollExtent -
+                  //     notification.metrics.pixels);
                   _getVideos();
                 }
               });

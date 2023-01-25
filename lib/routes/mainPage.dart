@@ -29,9 +29,9 @@ class _MainPageState extends State<MainPage> {
     var r = await Api().version();
 
     if (r.version != '') {
-      print(r.version);
-      print(Global.packageInfo.version);
-      print(haveNewVersion(r.version, Global.packageInfo.version));
+      // print(r.version);
+      // print(Global.packageInfo.version);
+      // print(haveNewVersion(r.version, Global.packageInfo.version));
       if (haveNewVersion(r.version, Global.packageInfo.version)) {
         return AppUpgradeInfo(
           title: '新版本 V' + r.version,
