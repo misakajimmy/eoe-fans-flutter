@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:eoe_fans/routes/picture/pictureDetail.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
@@ -20,14 +21,26 @@ class PictureSwiper extends StatelessWidget {
             return Stack(
               children: [
                 Positioned(
-                  top:0,
+                  top: 0,
                   bottom: 0,
                   left: 0,
                   right: 0,
-                  child: Container(
-                    child: ExtendedImage(
-                      image: image,
-                      fit: BoxFit.cover,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return PictureDetail(index: index, images: images);
+                          },
+                        ),
+                      );
+                    },
+                    child: Container(
+                      child: ExtendedImage(
+                        image: image,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 ),
@@ -37,7 +50,14 @@ class PictureSwiper extends StatelessWidget {
                   right: 0,
                   child: Container(
                     height: 40,
-                    color: Color.fromRGBO(0, 0, 0, .3),
+                    decoration: new BoxDecoration(
+                      color: Color.fromRGBO(0, 0, 0, .3),
+                      gradient: LinearGradient(
+                        colors: [Colors.transparent, Colors.black],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                      ),
+                    ),
                   ),
                 )
               ],
