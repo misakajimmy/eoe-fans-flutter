@@ -19,12 +19,6 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
 
-  final List<Widget> _bodyList = [
-    const VideoPage(),
-    const PicturePage(),
-    const MusicPage(),
-  ];
-
   Future<AppUpgradeInfo?> _checkAppInfo() async {
     var r = await Api().version();
 
@@ -52,6 +46,12 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> _bodyList = [
+      _selectedIndex == 0 ? const VideoPage() : Container(),
+      _selectedIndex == 1 ? const PicturePage() : Container(),
+      _selectedIndex == 2 ? const MusicPage() : Container(),
+    ];
+
     return Scaffold(
       body: Stack(
         children: [
@@ -66,9 +66,11 @@ class _MainPageState extends State<MainPage> {
               child: Container(
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage(
-                            'assets/${Provider.of<ThemeModel>(context).assets}/tail_bg.png'),
-                        fit: BoxFit.fill),
+                      image: AssetImage(
+                        'assets/${Provider.of<ThemeModel>(context).assets}/tail_bg.png',
+                      ),
+                      fit: BoxFit.fill,
+                    ),
                     color: Colors.transparent),
                 child: BottomNavigationBar(
                   elevation: 0,

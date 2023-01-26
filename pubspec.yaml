@@ -49,6 +49,7 @@ dependencies:
     pull_to_refresh: ^2.0.0
     settings_ui: ^2.0.2
     hgg_app_upgrade: ^1.0.0
+    extended_image: ^6.3.4
 
 dev_dependencies:
     flutter_test:

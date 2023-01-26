@@ -37,7 +37,7 @@ class _VideoPageState extends State<VideoPage> {
           ),
           centerTitle: true,
           title: Container(
-            width: 300,
+            width: 360,
             padding: const EdgeInsets.only(left: 20, right: 20),
             child: const TabBar(
               tabs: [
@@ -71,7 +71,7 @@ class _VideoPageState extends State<VideoPage> {
           ),
         ),
         body: Container(
-          padding: const EdgeInsets.only(left: 4, right: 4, top: 8),
+          padding: const EdgeInsets.only(left: 4, right: 4, top: 8,bottom: 40),
           child: const TabBarView(
             children: [
               VideoList(origin: true),
