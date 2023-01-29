@@ -18,7 +18,6 @@ class PictureList extends StatefulWidget {
 }
 
 class _PictureListState extends State<PictureList> {
-  List<String> items = ["1", "2", "3", "4", "5", "6", "7", "8"];
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
 

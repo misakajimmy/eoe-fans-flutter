@@ -1,4 +1,5 @@
 import 'package:eoe_fans/routes/video/videoNewYear.dart';
+import 'package:eoe_fans/routes/video/videoSearchPage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -58,7 +59,16 @@ class _VideoPageState extends State<VideoPage> {
               icon: const Icon(
                 Icons.search,
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return VideoSearchPage();
+                    },
+                  ),
+                );
+              },
             ),
           ],
           flexibleSpace: Container(
@@ -71,7 +81,7 @@ class _VideoPageState extends State<VideoPage> {
           ),
         ),
         body: Container(
-          padding: const EdgeInsets.only(left: 4, right: 4, top: 8,bottom: 40),
+          padding: const EdgeInsets.only(left: 4, right: 4, top: 8, bottom: 40),
           child: const TabBarView(
             children: [
               VideoList(origin: true),
