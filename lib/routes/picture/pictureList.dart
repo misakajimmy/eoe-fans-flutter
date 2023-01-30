@@ -158,7 +158,7 @@ class _PictureListState extends State<PictureList> {
           //   ),
           // ),
         ),
-        itemCount: dynamicList.length + 1,
+        itemCount: dynamicList.length,
       ),
     );
   }

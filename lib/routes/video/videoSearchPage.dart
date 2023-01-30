@@ -221,7 +221,7 @@ class _VideoSearchPageState extends State<VideoSearchPage> {
                     child: VideoSearchItem(video: videoList[i]),
                   ),
           ),
-          itemCount: videoList.length == 0 ? 0 : videoList.length + 1,
+          itemCount: videoList.length == 0 ? 0 : videoList.length,
         ),
       ),
     );
