@@ -2,7 +2,9 @@ import 'dart:math';
 
 import 'package:eoe_fans/common/Api.dart';
 import 'package:eoe_fans/models/index.dart';
+import 'package:eoe_fans/models/member.dart';
 import 'package:eoe_fans/models/picturesRequest.dart';
+import 'package:eoe_fans/routes/picture/pictureMemberFilter.dart';
 import 'package:eoe_fans/routes/picture/pictureSwiper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +25,7 @@ class _PictureListState extends State<PictureList> {
 
   int _page = 0;
   bool _loading = false;
+  MemberEnum? _memberFilter;
   List<Dynamic> dynamicList = [];
 
   @override
@@ -36,9 +39,29 @@ class _PictureListState extends State<PictureList> {
       _loading = true;
       _page++;
     });
+    PicturesTopic topic = PicturesTopic.all;
+    switch (_memberFilter) {
+      case MemberEnum.zao:
+        topic = PicturesTopic.zao;
+        break;
+      case MemberEnum.mi:
+        topic = PicturesTopic.mi;
+        break;
+      case MemberEnum.wan:
+        topic = PicturesTopic.wan;
+        break;
+      case MemberEnum.mo:
+        topic = PicturesTopic.mo;
+        break;
+      case MemberEnum.un:
+        topic = PicturesTopic.un;
+        break;
+      default:
+        topic = PicturesTopic.all;
+    }
     PicturesRequest param = PicturesRequest()
       ..page = _page
-      ..topic_id = PicturesTopic.all;
+      ..topic_id = topic;
     Pictures pictures = widget.pageType == PicturePageType.recommend
         ? await Api(context).picturesRecommend(param)
         : await Api(context).picturesLatest(param);
@@ -55,10 +78,8 @@ class _PictureListState extends State<PictureList> {
   }
 
   _reloadPictures({int? page}) async {
-    setState(() {
-      dynamicList = [];
-      _page = page ?? 0;
-    });
+    dynamicList = [];
+    _page = page ?? 0;
     await _getPictures();
   }
 
@@ -101,16 +122,33 @@ class _PictureListState extends State<PictureList> {
       onRefresh: _onRefresh,
       onLoading: _onLoading,
       child: ListView.builder(
-        itemBuilder: (c, i) => Card(
-          clipBehavior: Clip.antiAliasWithSaveLayer,
-          child: SizedBox(
-            width: double.infinity,
-            height: 480,
-            child: PictureSwiper(
-              dynamicId: dynamicList[i].dynamic_id.toString(),
-              images: dynamicList[i].pictures.map((e) => e.img_src).toList(),
-            ),
-          ),
+        itemBuilder: (c, i) => Container(
+          child: i == 0
+              ? SizedBox(
+                  width: double.infinity,
+                  height: 84,
+                  child: PictureMemberFilter(
+                    filter: _memberFilter,
+                    updateFilterMember: (MemberEnum? value) {
+                      _memberFilter = value;
+                      _reloadPictures();
+                    },
+                  ),
+                )
+              : SizedBox(
+                  width: double.infinity,
+                  height: 480,
+                  child: Card(
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    child: PictureSwiper(
+                      dynamicId: dynamicList[i].dynamic_id.toString(),
+                      images: dynamicList[i]
+                          .pictures
+                          .map((e) => e.img_src)
+                          .toList(),
+                    ),
+                  ),
+                ),
 
           // child: Center(
           //   child: Image(
@@ -120,7 +158,7 @@ class _PictureListState extends State<PictureList> {
           //   ),
           // ),
         ),
-        itemCount: dynamicList.length,
+        itemCount: dynamicList.length + 1,
       ),
     );
   }

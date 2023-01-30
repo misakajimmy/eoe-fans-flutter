@@ -26,6 +26,7 @@ class _VideoSearchPageState extends State<VideoSearchPage> {
   String searchString = '';
 
   int _page = 0;
+  VideosRequestOrder _order = VideosRequestOrder.score;
   List<Video> videoList = [];
 
   _searchVideo({required bool refresh}) async {
@@ -37,7 +38,7 @@ class _VideoSearchPageState extends State<VideoSearchPage> {
     if (searchString != '') {
       Videos videos = await Api(context).videos(
         VideosRequest()
-          ..order = VideosRequestOrder.score
+          ..order = _order
           ..page = _page
           ..q = 'tag.' + searchString,
       );
@@ -82,7 +83,7 @@ class _VideoSearchPageState extends State<VideoSearchPage> {
           child: Container(
             width: double.infinity,
             padding: EdgeInsets.only(left: 16, right: 16, bottom: 2),
-            // width: 120,
+            height: 32,
             child: TextField(
               maxLines: 1,
               decoration: InputDecoration(
@@ -93,7 +94,7 @@ class _VideoSearchPageState extends State<VideoSearchPage> {
                 searchString = v;
               },
               onSubmitted: (v) {
-                _searchVideo(refresh: true);
+                _refreshController.requestRefresh();
               },
             ),
           ),
@@ -105,7 +106,7 @@ class _VideoSearchPageState extends State<VideoSearchPage> {
         actions: [
           TextButton(
             onPressed: () {
-              _searchVideo(refresh: true);
+              _refreshController.requestRefresh();
             },
             child: Container(
               // color: Colors.amber,
@@ -167,20 +168,60 @@ class _VideoSearchPageState extends State<VideoSearchPage> {
                 ),
               ),
             ),
-            child: SizedBox(
-              width: double.infinity,
-              height: 120,
-              child: VideoSearchItem(video: videoList[i]),
-            ),
-            // child: Center(
-            //   child: Image(
-            //     image: CachedNetworkImageProvider(dynamicList[i].pictures[0].img_src),
-            //     fit: BoxFit.fitWidth,
-            //     width: double.infinity,
-            //   ),
-            // ),
+            child: i == 0
+                ? Row(
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          _order = VideosRequestOrder.score;
+                          _refreshController.requestRefresh();
+                        },
+                        child: Text(
+                          '默认排序',
+                          style: TextStyle(
+                            color: _order == VideosRequestOrder.score
+                                ? Color.fromRGBO(251, 114, 153, 1)
+                                : Colors.grey,
+                          ),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          _order = VideosRequestOrder.pubdate;
+                          _refreshController.requestRefresh();
+                        },
+                        child: Text(
+                          '最新发布',
+                          style: TextStyle(
+                            color: _order == VideosRequestOrder.pubdate
+                                ? Color.fromRGBO(251, 114, 153, 1)
+                                : Colors.grey,
+                          ),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          _order = VideosRequestOrder.view;
+                          _refreshController.requestRefresh();
+                        },
+                        child: Text(
+                          '最多播放',
+                          style: TextStyle(
+                            color: _order == VideosRequestOrder.view
+                                ? Color.fromRGBO(251, 114, 153, 1)
+                                : Colors.grey,
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                : SizedBox(
+                    width: double.infinity,
+                    height: 120,
+                    child: VideoSearchItem(video: videoList[i]),
+                  ),
           ),
-          itemCount: videoList.length,
+          itemCount: videoList.length == 0 ? 0 : videoList.length + 1,
         ),
       ),
     );

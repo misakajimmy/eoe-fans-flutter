@@ -37,7 +37,7 @@ class _PicturePageState extends State<PicturePage> {
           centerTitle: true,
           title: Container(
             width: 300,
-            padding: const EdgeInsets.only(left: 20, right: 20),
+            padding: const EdgeInsets.only(left: 20, right: 40),
             child: const TabBar(
               tabs: [
                 Tab(
@@ -50,12 +50,12 @@ class _PicturePageState extends State<PicturePage> {
             ),
           ),
           actions: [
-            IconButton(
-              icon: const Icon(
-                Icons.search,
-              ),
-              onPressed: () {},
-            ),
+            // IconButton(
+            //   icon: const Icon(
+            //     Icons.search,
+            //   ),
+            //   onPressed: () {},
+            // ),
           ],
           flexibleSpace: Container(
             height: double.maxFinite,

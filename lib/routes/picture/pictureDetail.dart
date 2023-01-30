@@ -27,6 +27,7 @@ class _PictureDetailState extends State<PictureDetail> {
   @override
   void initState() {
     currentIndex = widget.index;
+    print(currentIndex);
     super.initState();
   }
 
@@ -107,9 +108,9 @@ class _PictureDetailState extends State<PictureDetail> {
                   onPageChanged: (int index) {
                     currentIndex = index;
                   },
-                  // controller: PageController(
-                  //   initialPage: currentIndex,
-                  // ),
+                  controller: ExtendedPageController(
+                    initialPage: widget.index,
+                  ),
                   scrollDirection: Axis.horizontal,
                 ),
               ),
