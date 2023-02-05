@@ -5,7 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:image_gallery_saver_v3/image_gallery_saver.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
 
 class PictureDetail extends StatefulWidget {
   const PictureDetail({
