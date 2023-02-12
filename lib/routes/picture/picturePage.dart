@@ -67,7 +67,7 @@ class _PicturePageState extends State<PicturePage> {
           ),
         ),
         body: Container(
-          padding: const EdgeInsets.only(left: 4, right: 4, top: 8, bottom: 40),
+          padding: const EdgeInsets.only(left: 4, right: 4, bottom: 40),
           child: const TabBarView(
             children: [
               PictureList(pageType: PicturePageType.recommend),

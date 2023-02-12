@@ -26,12 +26,14 @@ class _PictureMemberFilterState extends State<PictureMemberFilter> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: GridView.count(
-      crossAxisCount: 5,
-      childAspectRatio: 1.0,
-      children: MemberEnum.values
-          .map(
-            (m) => GestureDetector(
+      child: Center(
+        child:  GridView.count(
+          shrinkWrap: true,
+          crossAxisCount: 5,
+          childAspectRatio: 1.0,
+          children: MemberEnum.values
+              .map(
+                (m) => GestureDetector(
               onTap: () {
                 setState(() {
                   if (widget.filter == m) {
@@ -79,7 +81,9 @@ class _PictureMemberFilterState extends State<PictureMemberFilter> {
               ),
             ),
           )
-          .toList(),
-    ));
+              .toList(),
+        ),
+      ),
+    );
   }
 }

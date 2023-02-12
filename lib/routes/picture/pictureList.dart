@@ -8,6 +8,7 @@ import 'package:eoe_fans/routes/picture/pictureMemberFilter.dart';
 import 'package:eoe_fans/routes/picture/pictureSwiper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class PictureList extends StatefulWidget {
@@ -27,11 +28,33 @@ class _PictureListState extends State<PictureList> {
   bool _loading = false;
   MemberEnum? _memberFilter;
   List<Dynamic> dynamicList = [];
+  List<Widget> listWidgets = [];
 
   @override
   void initState() {
     _getPictures();
+    _initListWidgets();
     super.initState();
+  }
+
+  _initListWidgets() {
+    listWidgets = [
+      StaggeredGridTile.count(
+        crossAxisCellCount: 4,
+        mainAxisCellCount: 1,
+        child: Center(
+          child: Container(
+            child: PictureMemberFilter(
+              filter: _memberFilter,
+              updateFilterMember: (MemberEnum? value) {
+                _memberFilter = value;
+                _reloadPictures();
+              },
+            ),
+          ),
+        ),
+      )
+    ];
   }
 
   _getPictures() async {
@@ -68,6 +91,24 @@ class _PictureListState extends State<PictureList> {
     if (pictures.result.length != 0) {
       setState(() {
         dynamicList = [...dynamicList, ...pictures.result];
+        listWidgets = [
+          ...listWidgets,
+          ...pictures.result.map(
+            (e) {
+              return StaggeredGridTile.count(
+                crossAxisCellCount: 2,
+                mainAxisCellCount: 3,
+                child: Card(
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  child: PictureSwiper(
+                    dynamicId: e.dynamic_id.toString(),
+                    images: e.pictures.map((e) => e.img_src).toList(),
+                  ),
+                ),
+              );
+            },
+          ).toList()
+        ];
         _loading = false;
       });
     } else {
@@ -79,6 +120,9 @@ class _PictureListState extends State<PictureList> {
 
   _reloadPictures({int? page}) async {
     dynamicList = [];
+    setState(() {
+      _initListWidgets();
+    });
     _page = page ?? 0;
     await _getPictures();
   }
@@ -121,45 +165,51 @@ class _PictureListState extends State<PictureList> {
       controller: _refreshController,
       onRefresh: _onRefresh,
       onLoading: _onLoading,
-      child: ListView.builder(
-        itemBuilder: (c, i) => Container(
-          child: i == 0
-              ? SizedBox(
-                  width: double.infinity,
-                  height: 84,
-                  child: PictureMemberFilter(
-                    filter: _memberFilter,
-                    updateFilterMember: (MemberEnum? value) {
-                      _memberFilter = value;
-                      _reloadPictures();
-                    },
-                  ),
-                )
-              : SizedBox(
-                  width: double.infinity,
-                  height: 480,
-                  child: Card(
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    child: PictureSwiper(
-                      dynamicId: dynamicList[i].dynamic_id.toString(),
-                      images: dynamicList[i]
-                          .pictures
-                          .map((e) => e.img_src)
-                          .toList(),
-                    ),
-                  ),
-                ),
-
-          // child: Center(
-          //   child: Image(
-          //     image: CachedNetworkImageProvider(dynamicList[i].pictures[0].img_src),
-          //     fit: BoxFit.fitWidth,
-          //     width: double.infinity,
-          //   ),
-          // ),
-        ),
-        itemCount: dynamicList.length,
+      child: StaggeredGrid.count(
+        crossAxisCount: 4,
+        mainAxisSpacing: 4,
+        crossAxisSpacing: 4,
+        children: listWidgets,
       ),
+      // child: ListView.builder(
+      //   itemBuilder: (c, i) => Container(
+      //     child: i == 0
+      //         ? SizedBox(
+      //             width: double.infinity,
+      //             height: 84,
+      //             child: PictureMemberFilter(
+      //               filter: _memberFilter,
+      //               updateFilterMember: (MemberEnum? value) {
+      //                 _memberFilter = value;
+      //                 _reloadPictures();
+      //               },
+      //             ),
+      //           )
+      //         : SizedBox(
+      //             width: double.infinity,
+      //             height: 480,
+      //             child: Card(
+      //               clipBehavior: Clip.antiAliasWithSaveLayer,
+      //               child: PictureSwiper(
+      //                 dynamicId: dynamicList[i].dynamic_id.toString(),
+      //                 images: dynamicList[i]
+      //                     .pictures
+      //                     .map((e) => e.img_src)
+      //                     .toList(),
+      //               ),
+      //             ),
+      //           ),
+      //
+      //     // child: Center(
+      //     //   child: Image(
+      //     //     image: CachedNetworkImageProvider(dynamicList[i].pictures[0].img_src),
+      //     //     fit: BoxFit.fitWidth,
+      //     //     width: double.infinity,
+      //     //   ),
+      //     // ),
+      //   ),
+      //   itemCount: dynamicList.length,
+      // ),
     );
   }
 }

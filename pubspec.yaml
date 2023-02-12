@@ -52,6 +52,7 @@ dependencies:
     extended_image: ^6.3.4
     image_gallery_saver: ^1.7.1
     fluttertoast: ^8.1.2
+    modal_bottom_sheet: ^2.1.2
 
 dev_dependencies:
     flutter_test:
