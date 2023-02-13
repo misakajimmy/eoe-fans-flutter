@@ -3,13 +3,13 @@ import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 const images = [
-  'assets/banner1.jpg',
+  'assets/banner1.png',
   'assets/banner2.png',
   'assets/banner3.png',
 ];
 
 const urls = [
-  'https://b23.tv/GI9EDCl',
+  'https://b23.tv/KjrFIG1',
   'bilibili://video/BV1Pv4y1C7TE',
   'https://b23.tv/kI0MBkx'
 ];
